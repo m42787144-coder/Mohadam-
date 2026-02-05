@@ -9,13 +9,13 @@
 
   body {
     font-family: 'Georgia', serif;
-    background: #fdf5e6; /* کرمی روشن */
+    background: #fdf5e6;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     text-align: center;
-    color: #330000; /* متن مشکی/چری */
+    color: #330000;
     overflow: hidden;
   }
 
@@ -33,7 +33,6 @@
     z-index: 1;
   }
 
-  /* متن بالای عکس */
   .quote {
     font-size: 2em;
     font-weight: bold;
@@ -48,7 +47,6 @@
     100% { text-shadow: 0 0 12px #ffccd5, 0 0 25px #ffb3c1; }
   }
 
-  /* قاب عکس */
   .photo-frame {
     width: 100%;
     border: 4px solid #330000;
@@ -87,7 +85,6 @@
     box-shadow: 0 0 60px rgba(255, 102, 130, 0.5);
   }
 
-  /* پلیر */
   .audio-player {
     width: 100%;
     max-width: 360px;
@@ -110,7 +107,6 @@
     box-shadow: 0 0 55px rgba(255,102,130,0.6);
   }
 
-  /* قلب‌های متحرک صورتی */
   .hearts-container {
     position: fixed;
     width: 100%;
@@ -146,12 +142,12 @@
   <h1 class="quote">"You & Me, Forever"</h1>
 
   <div class="photo-frame">
-    <img src="photo2.jpg" alt="Hover Photo" class="bottom">
-    <img src="photo1.jpg" alt="Main Photo" class="top">
+    <img src="photo2.jpg" alt="" class="bottom">
+    <img src="photo1.jpg" alt="" class="top">
   </div>
 
   <div class="audio-player">
-    <audio controls autoplay>
+    <audio id="bgAudio" controls autoplay>
       <source src="song.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
@@ -172,6 +168,12 @@
     setTimeout(() => heart.remove(), 8000);
   }
   setInterval(createHeart, 300);
+
+  // پلی خودکار آهنگ حتی روی موبایل (روی مرورگرهای مدرن)
+  const audio = document.getElementById('bgAudio');
+  window.addEventListener('load', () => {
+    audio.play().catch(()=>{}); // اگه autoplay بلاک شد، نادیده بگیر
+  });
 </script>
 
 </body>
