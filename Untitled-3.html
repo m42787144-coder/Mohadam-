@@ -142,13 +142,13 @@
   <h1 class="quote">"You & Me, Forever"</h1>
 
   <div class="photo-frame">
-    <img src="photo2.jpg" alt="" class="bottom">
-    <img src="photo1.jpg" alt="" class="top">
+    <img src="Photo1.jpg" alt="" class="top">   <!-- عکس اصلی -->
+    <img src="Photo2.jpg" alt="" class="bottom"> <!-- عکس دوم برای hover -->
   </div>
 
   <div class="audio-player">
     <audio id="bgAudio" controls autoplay>
-      <source src="song.mp3" type="audio/mpeg">
+      <source src="Song.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
   </div>
@@ -169,10 +169,10 @@
   }
   setInterval(createHeart, 300);
 
-  // پلی خودکار آهنگ حتی روی موبایل (روی مرورگرهای مدرن)
+  // پلی خودکار آهنگ
   const audio = document.getElementById('bgAudio');
   window.addEventListener('load', () => {
-    audio.play().catch(()=>{}); // اگه autoplay بلاک شد، نادیده بگیر
+    audio.play().catch(()=>{}); 
   });
 </script>
 
