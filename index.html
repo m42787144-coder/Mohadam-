@@ -6,69 +6,126 @@
 <title>Valentine Light Story Vibe</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:Georgia,serif;
-  background:#fdf5e6;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  color:#330000;
-  overflow:hidden;
-}
-.wrapper{
-  display:flex;
-  flex-direction:column;
-  gap:25px;
-  width:90%;
-  max-width:450px;
-  padding:30px;
-  z-index:1;
-}
-.quote{
-  font-size:2em;
-  font-weight:bold;
-  text-shadow:0 0 5px #ffccd5,0 0 10px #ffb3c1;
-  animation:glow 2s infinite alternate;
-}
-@keyframes glow{
-  from{ text-shadow:0 0 5px #ffccd5 }
-  to{ text-shadow:0 0 20px #ff99aa }
-}
-.photo-frame{
-  width:100%;
-  padding-top:100%;
-  position:relative;
-  border-radius:25px;
-  overflow:hidden;
-}
-.photo-frame img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.audio-player{
-  background:rgba(255,204,213,.25);
-  padding:16px;
-  border-radius:20px;
-}
-audio{width:100%}
-.hearts-container{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
-.heart{
-  position:absolute;
-  animation:fall linear infinite;
-}
-@keyframes fall{
-  to{transform:translateY(110vh);opacity:0}
-}
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #fdf5e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    color: #330000;
+    overflow: hidden;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 25px;
+    overflow: hidden;
+    padding: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote {
+    font-size: 2em;
+    font-weight: bold;
+    color: #330000;
+    text-shadow: 0 0 5px #ffccd5, 0 0 10px #ffb3c1;
+    animation: glowText 2s infinite alternate;
+  }
+
+  @keyframes glowText {
+    0% { text-shadow: 0 0 3px #ffccd5, 0 0 8px #ffb3c1; }
+    50% { text-shadow: 0 0 8px #ffccd5, 0 0 15px #ffb3c1; }
+    100% { text-shadow: 0 0 12px #ffccd5, 0 0 25px #ffb3c1; }
+  }
+
+  .photo-frame {
+    width: 100%;
+    border: 4px solid #330000;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    padding-top: 100%;
+    box-shadow: 0 0 30px rgba(255, 51, 80, 0.3);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .photo-frame img {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 25px;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .photo-frame img.top {
+    opacity: 1;
+    z-index:2;
+  }
+
+  .photo-frame:hover img.top {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+
+  .photo-frame:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 60px rgba(255, 102, 130, 0.5);
+  }
+
+  .audio-player {
+    width: 100%;
+    max-width: 360px;
+    background: rgba(255,204,213,0.2);
+    padding: 16px 22px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(255,102,130,0.4);
+    backdrop-filter: blur(6px);
+  }
+
+  .audio-player audio {
+    width: 100%;
+    display: block;
+    border-radius: 14px;
+  }
+
+  .hearts-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .heart {
+    position: absolute;
+    font-size: 12px;
+    color: #ff99aa;
+    opacity: 0.8;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-50px) scale(0.8); opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { transform: translateY(110vh) scale(1); opacity: 0; }
+  }
 </style>
 </head>
 
@@ -80,40 +137,51 @@ audio{width:100%}
   <h1 class="quote">"You & Me, Forever"</h1>
 
   <div class="photo-frame">
-    <img src="Photo1.jpg">
-    <img src="photo2.jpg">
+    <img src="Photo1.jpg" class="top">
+    <img src="photo2.jpg" class="bottom">
   </div>
 
   <div class="audio-player">
-    <audio id="bgAudio" controls>
+    <audio id="bgAudio" controls preload="auto">
       <source src="song.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
     </audio>
-    <p style="font-size:.9em;margin-top:8px">
-      👆 لمس کن تا آهنگ پخش بشه
-    </p>
   </div>
 </div>
 
 <script>
-const container = document.getElementById('hearts');
-setInterval(()=>{
-  const h=document.createElement('div');
-  h.className='heart';
-  h.innerText='❤️';
-  h.style.left=Math.random()*100+'vw';
-  h.style.fontSize=12+Math.random()*18+'px';
-  h.style.animationDuration=4+Math.random()*4+'s';
-  container.appendChild(h);
-  setTimeout(()=>h.remove(),8000);
-},300);
+  // ❤️ قلب‌های متحرک
+  const container = document.getElementById('hearts');
 
-// پلی با اولین لمس (موبایل‌پسند)
-const audio = document.getElementById('bgAudio');
-document.body.addEventListener('click', ()=>{
-  if(audio.paused){
-    audio.play();
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = 12 + Math.random() * 18 + 'px';
+    heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+    heart.innerText = '❤️';
+    container.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
   }
-},{once:true});
+
+  setInterval(createHeart, 300);
+
+  // 🎵 پلی آهنگ با اولین لمس هرجای صفحه
+  const audio = document.getElementById('bgAudio');
+  let played = false;
+
+  function playOnFirstTouch() {
+    if (!played) {
+      audio.play().catch(()=>{});
+      played = true;
+      document.removeEventListener('touchstart', playOnFirstTouch);
+      document.removeEventListener('click', playOnFirstTouch);
+    }
+  }
+
+mohammadi.m, [2/7/2026 6:05 PM]
+document.addEventListener('touchstart', playOnFirstTouch);
+  document.addEventListener('click', playOnFirstTouch);
 </script>
 
 </body>
