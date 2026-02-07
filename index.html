@@ -1,10 +1,10 @@
+mohammadi.m, [2/7/2026 6:45 PM]
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine Light Story Vibe</title>
-
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -93,6 +93,7 @@
     padding: 16px 22px;
     border-radius: 20px;
     box-shadow: 0 0 25px rgba(255,102,130,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     backdrop-filter: blur(6px);
   }
 
@@ -100,6 +101,11 @@
     width: 100%;
     display: block;
     border-radius: 14px;
+  }
+
+  .audio-player:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 55px rgba(255,102,130,0.6);
   }
 
   .hearts-container {
@@ -126,9 +132,9 @@
     50% { opacity: 1; }
     100% { transform: translateY(110vh) scale(1); opacity: 0; }
   }
+
 </style>
 </head>
-
 <body>
 
 <div class="hearts-container" id="hearts"></div>
@@ -137,10 +143,11 @@
   <h1 class="quote">"You & Me, Forever"</h1>
 
   <div class="photo-frame">
-    <img src="Photo1.jpg" class="top">
-    <img src="photo2.jpg" class="bottom">
+    <img src="Photo1.jpg" alt="" class="top">
+    <img src="photo2.jpg" alt="" class="bottom">
   </div>
 
+  <!-- 🎵 بخش آهنگ اصلاح شده -->
   <div class="audio-player">
     <audio id="bgAudio" controls preload="auto">
       <source src="song.mp3" type="audio/mpeg">
@@ -152,7 +159,6 @@
 <script>
   // ❤️ قلب‌های متحرک
   const container = document.getElementById('hearts');
-
   function createHeart() {
     const heart = document.createElement('div');
     heart.classList.add('heart');
@@ -163,14 +169,14 @@
     container.appendChild(heart);
     setTimeout(() => heart.remove(), 8000);
   }
-
   setInterval(createHeart, 300);
 
   // 🎵 پلی آهنگ با اولین لمس هرجای صفحه
   const audio = document.getElementById('bgAudio');
   let played = false;
 
-  function playOnFirstTouch() {
+mohammadi.m, [2/7/2026 6:45 PM]
+function playOnFirstTouch() {
     if (!played) {
       audio.play().catch(()=>{});
       played = true;
@@ -179,8 +185,7 @@
     }
   }
 
-mohammadi.m, [2/7/2026 6:05 PM]
-document.addEventListener('touchstart', playOnFirstTouch);
+  document.addEventListener('touchstart', playOnFirstTouch);
   document.addEventListener('click', playOnFirstTouch);
 </script>
 
